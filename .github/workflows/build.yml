@@ -42,7 +42,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"renanpessotti_netcore-api-boilerplate" /o:"renanpessotti" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="./tests/coverage.opencover.xml"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"RenanPessotti_netcore-api-boilerplate" /o:"renanpessotti" /d:sonar.login="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="./tests/coverage.opencover.xml"
           dotnet build WebApiBoilerplate.sln --configuration Release
           dotnet test WebApiBoilerplate.sln --% /p:CollectCoverage=true /p:CoverletOutput="../" /p:MergeWith="../coverage.json" /p:CoverletOutputFormat=\"opencover,json\" -m:1 --logger:trx --results-directory ./
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.login="${{ secrets.SONAR_TOKEN }}"
