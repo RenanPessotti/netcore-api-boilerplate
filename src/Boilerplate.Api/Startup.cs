@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using Boilerplate.Api.Extensions;
 using Boilerplate.Application.Interfaces;
 using Boilerplate.Application.Services;
-using Boilerplate.Domain.Repositories;
+using Boilerplate.Domain.Interfaces.Repositories;
 using Boilerplate.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

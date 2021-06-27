@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Boilerplate.Domain.Core.Entities;
-using Boilerplate.Domain.Core.Interfaces;
+using Boilerplate.Domain.Core.Interfaces.Repositories;
 using Boilerplate.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 

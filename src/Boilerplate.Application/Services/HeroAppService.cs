@@ -8,7 +8,7 @@ using Boilerplate.Application.Extensions;
 using Boilerplate.Application.Filters;
 using Boilerplate.Application.Interfaces;
 using Boilerplate.Domain.Entities;
-using Boilerplate.Domain.Repositories;
+using Boilerplate.Domain.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Boilerplate.Application.Services

@@ -1,5 +1,5 @@
 ﻿using Boilerplate.Domain.Entities;
-using Boilerplate.Domain.Repositories;
+using Boilerplate.Domain.Interfaces.Repositories;
 using Boilerplate.Infrastructure.Context;
 
 namespace Boilerplate.Infrastructure.Repositories
