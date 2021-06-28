@@ -10,13 +10,13 @@ namespace Boilerplate.Infrastructure.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {
-        public Repository(HeroDbContext dbContext)
+        public Repository(PersonDbContext dbContext)
         {
             Db = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             DbSet = Db.Set<TEntity>();
         }
 
-        protected HeroDbContext Db { get; }
+        protected PersonDbContext Db { get; }
 
         protected DbSet<TEntity> DbSet { get; }
 

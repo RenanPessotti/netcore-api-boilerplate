@@ -2,7 +2,7 @@
 
 namespace Boilerplate.Domain.Interfaces.Entities
 {
-    public interface IHero : IEntity
+    public interface IPerson : IEntity
     {
     }
 }

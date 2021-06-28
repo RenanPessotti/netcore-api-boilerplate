@@ -12,25 +12,25 @@ namespace Boilerplate.Api.IntegrationTests.Helpers
 {
     public static class Utilities
     {
-        public static void InitializeDbForTests(HeroDbContext db)
+        public static void InitializeDbForTests(PersonDbContext db)
         {
-            db.Heroes.AddRange(GetSeedingHeroes());
+            db.Persons.AddRange(GetSeedingPersons());
             db.SaveChanges();
         }
 
-        public static void ReinitializeDbForTests(HeroDbContext db)
+        public static void ReinitializeDbForTests(PersonDbContext db)
         {
-            db.Heroes.RemoveRange(db.Heroes);
+            db.Persons.RemoveRange(db.Persons);
             InitializeDbForTests(db);
         }
 
-        public static List<Hero> GetSeedingHeroes()
+        public static List<Person> GetSeedingPersons()
         {
             return new()
             {
-                new(new Guid("824a7a65-b769-4b70-bccb-91f880b6ddf1")) { Name = "Corban Best", HeroType = HeroType.ProHero },
-                new(new Guid("b426070e-ccb3-42e6-8fb4-ef6aa5a62cc4")) { Name = "Priya Hull", HeroType = HeroType.Student },
-                new(new Guid("634769f7-a7b8-4146-9cb2-ff2dd90e886b")) { Name = "Harrison Vu", HeroType = HeroType.Teacher }
+                new(new Guid("824a7a65-b769-4b70-bccb-91f880b6ddf1")) { Name = "Test Male", Sex = Sex.Male },
+                new(new Guid("b426070e-ccb3-42e6-8fb4-ef6aa5a62cc4")) { Name = "Female Test", Sex = Sex.Female },
+                new(new Guid("634769f7-a7b8-4146-9cb2-ff2dd90e886b")) { Name = "Male Test", Sex = Sex.Male }
             };
         }
 
@@ -46,7 +46,7 @@ namespace Boilerplate.Api.IntegrationTests.Helpers
                     using (var scope = sp.CreateScope())
                     {
                         var scopedServices = scope.ServiceProvider;
-                        var db = scopedServices.GetRequiredService<HeroDbContext>();
+                        var db = scopedServices.GetRequiredService<PersonDbContext>();
                         var logger = scopedServices
                             .GetRequiredService<ILogger<WebApplicationFactory<Startup>>>();
 
@@ -79,7 +79,7 @@ namespace Boilerplate.Api.IntegrationTests.Helpers
                     {
                         var scopedServices = scope.ServiceProvider;
                         var db = scopedServices
-                            .GetRequiredService<HeroDbContext>();
+                            .GetRequiredService<PersonDbContext>();
                         var logger = scopedServices
                             .GetRequiredService<ILogger<IntegrationTest>>();
                         try

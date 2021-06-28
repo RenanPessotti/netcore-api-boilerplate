@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Boilerplate.Infrastructure.Migrations
 {
-    [DbContext(typeof(HeroDbContext))]
-    internal class HeroDbContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(PersonDbContext))]
+    internal class PersonDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -19,7 +19,7 @@ namespace Boilerplate.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Boilerplate.Domain.Entities.Hero", b =>
+            modelBuilder.Entity("Boilerplate.Domain.Entities.Person", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -28,10 +28,10 @@ namespace Boilerplate.Infrastructure.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("HeroType")
+                    b.Property<int>("Sex")
                         .HasColumnType("int");
 
-                    b.Property<string>("Individuality")
+                    b.Property<string>("Job")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -41,12 +41,9 @@ namespace Boilerplate.Infrastructure.Migrations
                     b.Property<string>("Nickname")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Team")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Heroes");
+                    b.ToTable("Persons");
                 });
 #pragma warning restore 612, 618
         }

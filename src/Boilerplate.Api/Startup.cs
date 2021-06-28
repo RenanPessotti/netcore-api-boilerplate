@@ -31,8 +31,8 @@ namespace Boilerplate.Api
             services.AddApplicationDbContext(Configuration, Environment);
 
             //DI Services and Repos
-            services.AddScoped<IHeroRepository, HeroRepository>();
-            services.AddScoped<IHeroAppService, HeroAppService>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
+            services.AddScoped<IPersonAppService, PersonAppService>();
 
             // WebApi Configuration
             services.AddControllers().AddJsonOptions(options =>
@@ -42,7 +42,7 @@ namespace Boilerplate.Api
             });
 
             services.AddHealthChecks()
-                .AddDbContextCheck<HeroDbContext>();
+                .AddDbContextCheck<PersonDbContext>();
 
             // AutoMapper settings
             services.AddAutoMapperSetup();

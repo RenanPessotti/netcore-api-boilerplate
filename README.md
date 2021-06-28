@@ -64,11 +64,11 @@ In the root folder, run ``dotnet test``. This command will try to find all test 
 4. Infra
 	- This folder contains all data access repositories, database contexts, anything that reaches for outside data.
 	1. Boilerplate.Infrastructure
-		- This project contains the dbcontext, an generic implementation of repository pattern and a Hero(domain class) repository.
+		- This project contains the dbcontext, an generic implementation of repository pattern and a Person(domain class) repository.
 
 
 # Adopting to your project
-1. Remove/Rename all hero related stuff to your needs.
+1. Remove/Rename all Person related stuff to your needs.
 2. Rename solution, projects, namespaces, and ruleset to your use.
 3. Change the dockerfile and docker-compose.yml to your new csproj/folder names.
 3. Give this repo a star!

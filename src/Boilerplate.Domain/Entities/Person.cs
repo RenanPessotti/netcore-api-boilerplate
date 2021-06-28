@@ -6,19 +6,17 @@ using Boilerplate.Domain.Interfaces.Entities;
 
 namespace Boilerplate.Domain.Entities
 {
-    public class Hero : Entity, IHero
+    public class Person : Entity, IPerson
     {
-        public Hero(Guid id) : base(id) { }
+        public Person(Guid id) : base(id) { }
 
         [Required]
         public string Name { get; set; }
         public string Nickname { get; set; }
-        public string Individuality { get; set; }
+        public string Job { get; set; }
         public int? Age { get; set; }
 
         [Required]
-        public HeroType? HeroType { get; set; }
-
-        public string Team { get; set; }
+        public Sex? Sex { get; set; }
     }
 }

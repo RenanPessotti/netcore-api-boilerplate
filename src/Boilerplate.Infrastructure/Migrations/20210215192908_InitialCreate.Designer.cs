@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Boilerplate.Infrastructure.Migrations
 {
-    [DbContext(typeof(HeroDbContext))]
+    [DbContext(typeof(PersonDbContext))]
     [Migration("20210215192908_InitialCreate")]
     partial class InitialCreate
     {
@@ -21,7 +21,7 @@ namespace Boilerplate.Infrastructure.Migrations
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Boilerplate.Domain.Entities.Hero", b =>
+            modelBuilder.Entity("Boilerplate.Domain.Entities.Person", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -30,10 +30,10 @@ namespace Boilerplate.Infrastructure.Migrations
                     b.Property<int?>("Age")
                         .HasColumnType("int");
 
-                    b.Property<int>("HeroType")
+                    b.Property<int>("Sex")
                         .HasColumnType("int");
 
-                    b.Property<string>("Individuality")
+                    b.Property<string>("Job")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -42,13 +42,10 @@ namespace Boilerplate.Infrastructure.Migrations
 
                     b.Property<string>("Nickname")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Team")
-                        .HasColumnType("nvarchar(max)");
-
+                    
                     b.HasKey("Id");
 
-                    b.ToTable("Heroes");
+                    b.ToTable("Persons");
                 });
 #pragma warning restore 612, 618
         }

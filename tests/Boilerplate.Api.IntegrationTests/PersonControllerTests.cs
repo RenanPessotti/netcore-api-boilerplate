@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Boilerplate.Api.IntegrationTests.Helpers;
 using Boilerplate.Application.DTOs;
-using Boilerplate.Application.DTOs.Hero;
+using Boilerplate.Application.DTOs.Person;
 using FluentAssertions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -14,22 +14,22 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Boilerplate.Api.IntegrationTests
 {
-    public class HeroControllerTests : IntegrationTest
+    public class PersonControllerTests : IntegrationTest
     {
         #region GET
 
         [Fact]
-        public async Task Get_AllHeroes_ReturnsOk()
+        public async Task Get_AllPersons_ReturnsOk()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/Hero");
+            var response = await client.GetAsync("/api/Person");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var json = JsonConvert.DeserializeObject<PaginatedList<GetHeroDto>>(await response.Content.ReadAsStringAsync());
+            var json = JsonConvert.DeserializeObject<PaginatedList<GetPersonDto>>(await response.Content.ReadAsStringAsync());
             json.Should().NotBeNull();
             json.Result.Should().OnlyHaveUniqueItems();
             json.Result.Should().HaveCount(3);
@@ -39,17 +39,17 @@ namespace Boilerplate.Api.IntegrationTests
         }
 
         [Fact]
-        public async Task Get_AllHeroesWithPaginationFilter_ReturnsOk()
+        public async Task Get_AllPersonsWithPaginationFilter_ReturnsOk()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/Hero?PageSize=1&CurrentPage=1");
+            var response = await client.GetAsync("/api/Person?PageSize=1&CurrentPage=1");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var json = JsonConvert.DeserializeObject<PaginatedList<GetHeroDto>>(await response.Content.ReadAsStringAsync());
+            var json = JsonConvert.DeserializeObject<PaginatedList<GetPersonDto>>(await response.Content.ReadAsStringAsync());
             json.Should().NotBeNull();
             json.Result.Should().OnlyHaveUniqueItems();
             json.Result.Should().HaveCount(1);
@@ -59,17 +59,17 @@ namespace Boilerplate.Api.IntegrationTests
         }
 
         [Fact]
-        public async Task Get_AllHeroesWithNegativePageSize_ReturnsOk()
+        public async Task Get_AllPersonsWithNegativePageSize_ReturnsOk()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/Hero?PageSize=-1&CurrentPage=1");
+            var response = await client.GetAsync("/api/Person?PageSize=-1&CurrentPage=1");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var json = JsonConvert.DeserializeObject<PaginatedList<GetHeroDto>>(await response.Content.ReadAsStringAsync());
+            var json = JsonConvert.DeserializeObject<PaginatedList<GetPersonDto>>(await response.Content.ReadAsStringAsync());
             json.Should().NotBeNull();
             json.Result.Should().OnlyHaveUniqueItems();
             json.Result.Should().HaveCount(3);
@@ -79,17 +79,17 @@ namespace Boilerplate.Api.IntegrationTests
         }
 
         [Fact]
-        public async Task Get_AllHeroesWithNegativeCurrentPage_ReturnsOk()
+        public async Task Get_AllPersonsWithNegativeCurrentPage_ReturnsOk()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/Hero?PageSize=15&CurrentPage=-1");
+            var response = await client.GetAsync("/api/Person?PageSize=15&CurrentPage=-1");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var json = JsonConvert.DeserializeObject<PaginatedList<GetHeroDto>>(await response.Content.ReadAsStringAsync());
+            var json = JsonConvert.DeserializeObject<PaginatedList<GetPersonDto>>(await response.Content.ReadAsStringAsync());
             json.Should().NotBeNull();
             json.Result.Should().OnlyHaveUniqueItems();
             json.Result.Should().HaveCount(3);
@@ -99,17 +99,17 @@ namespace Boilerplate.Api.IntegrationTests
         }
 
         [Fact]
-        public async Task Get_ExistingHeroesWithFilter_ReturnsOk()
+        public async Task Get_ExistingPersonsWithFilter_ReturnsOk()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/Hero?Name=Corban");
+            var response = await client.GetAsync("/api/Person?Name=Corban");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var json = JsonConvert.DeserializeObject<PaginatedList<GetHeroDto>>(await response.Content.ReadAsStringAsync());
+            var json = JsonConvert.DeserializeObject<PaginatedList<GetPersonDto>>(await response.Content.ReadAsStringAsync());
             json.Should().NotBeNull();
             json.Result.Should().OnlyHaveUniqueItems();
             json.Result.Should().HaveCount(1);
@@ -120,17 +120,17 @@ namespace Boilerplate.Api.IntegrationTests
 
 
         [Fact]
-        public async Task Get_NonExistingHeroesWithFilter_ReturnsOk()
+        public async Task Get_NonExistingPersonsWithFilter_ReturnsOk()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/Hero?Name=asdfsdlkafhsduifhasduifhsdui");
+            var response = await client.GetAsync("/api/Person?Name=asdfsdlkafhsduifhasduifhsdui");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var json = JsonConvert.DeserializeObject<PaginatedList<GetHeroDto>>(await response.Content.ReadAsStringAsync());
+            var json = JsonConvert.DeserializeObject<PaginatedList<GetPersonDto>>(await response.Content.ReadAsStringAsync());
             json.Should().NotBeNull();
             json.Result.Should().BeEmpty();
             json.CurrentPage.Should().Be(1);
@@ -139,31 +139,31 @@ namespace Boilerplate.Api.IntegrationTests
         }
 
         [Fact]
-        public async Task GetById_ExistingHero_ReturnsOk()
+        public async Task GetById_ExistingPerson_ReturnsOk()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var response = await client.GetAsync("/api/Hero/824a7a65-b769-4b70-bccb-91f880b6ddf1");
+            var response = await client.GetAsync("/api/Person/824a7a65-b769-4b70-bccb-91f880b6ddf1");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.OK);
-            var json = JsonConvert.DeserializeObject<GetHeroDto>(await response.Content.ReadAsStringAsync());
+            var json = JsonConvert.DeserializeObject<GetPersonDto>(await response.Content.ReadAsStringAsync());
             json.Should().NotBeNull();
             json.Id.Should().NotBeEmpty();
             json.Name.Should().NotBeNull();
-            json.HeroType.Should().NotBeNull();
+            json.Sex.Should().NotBeNull();
         }
 
         [Fact]
-        public async Task GetById_ExistingHero_ReturnsNotFound()
+        public async Task GetById_ExistingPerson_ReturnsNotFound()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var response = await client.GetAsync($"/api/Hero/{Guid.NewGuid()}");
+            var response = await client.GetAsync($"/api/Person/{Guid.NewGuid()}");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -174,73 +174,73 @@ namespace Boilerplate.Api.IntegrationTests
         #region POST
 
         [Fact]
-        public async Task Post_ValidHero_ReturnsCreated()
+        public async Task Post_ValidPerson_ReturnsCreated()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var newHero = JsonSerializer.Serialize(new
+            var newPerson = JsonSerializer.Serialize(new
             {
-                Name = "Name hero success",
-                HeroType = 1
+                Name = "Name Person success",
+                Sex = 1
             });
-            var response = await client.PostAsync("/api/Hero", new StringContent(newHero, Encoding.UTF8, "application/json"));
+            var response = await client.PostAsync("/api/Person", new StringContent(newPerson, Encoding.UTF8, "application/json"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.Created);
-            var json = JsonConvert.DeserializeObject<GetHeroDto>(await response.Content.ReadAsStringAsync());
+            var json = JsonConvert.DeserializeObject<GetPersonDto>(await response.Content.ReadAsStringAsync());
             json.Should().NotBeNull();
             json.Id.Should().NotBeEmpty();
             json.Name.Should().NotBeNull();
-            json.HeroType.Should().NotBeNull();
+            json.Sex.Should().NotBeNull();
         }
 
         [Fact]
-        public async Task Post_NamelessHero_ReturnsBadRequest()
+        public async Task Post_NamelessPerson_ReturnsBadRequest()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var newHero = JsonSerializer.Serialize(new
+            var newPerson = JsonSerializer.Serialize(new
             {
-                Individuality = "Individuality hero badrequest"
+                Job = "Job Person badrequest"
             });
-            var response = await client.PostAsync("/api/Hero", new StringContent(newHero, Encoding.UTF8, "application/json"));
+            var response = await client.PostAsync("/api/Person", new StringContent(newPerson, Encoding.UTF8, "application/json"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
-        public async Task Post_IndividualitylessHero_ReturnsBadRequest()
+        public async Task Post_JoblessPerson_ReturnsBadRequest()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var newHero = JsonSerializer.Serialize(new
+            var newPerson = JsonSerializer.Serialize(new
             {
-                Name = "Name hero badrequest"
+                Name = "Name Person badrequest"
             });
-            var response = await client.PostAsync("/api/Hero", new StringContent(newHero, Encoding.UTF8, "application/json"));
+            var response = await client.PostAsync("/api/Person", new StringContent(newPerson, Encoding.UTF8, "application/json"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
-        public async Task Post_EmptyHero_ReturnsBadRequest()
+        public async Task Post_EmptyPerson_ReturnsBadRequest()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var newHero = JsonSerializer.Serialize(new
+            var newPerson = JsonSerializer.Serialize(new
             {
             });
-            var response = await client.PostAsync("/api/Hero", new StringContent(newHero, Encoding.UTF8, "application/json"));
+            var response = await client.PostAsync("/api/Person", new StringContent(newPerson, Encoding.UTF8, "application/json"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
@@ -252,18 +252,18 @@ namespace Boilerplate.Api.IntegrationTests
         #region PUT
 
         [Fact]
-        public async Task Put_ValidHero_ReturnsNoContent()
+        public async Task Put_ValidPerson_ReturnsNoContent()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var newHero = JsonSerializer.Serialize(new
+            var newPerson = JsonSerializer.Serialize(new
             {
-                Name = "Name hero success",
-                HeroType = 1
+                Name = "Name Person success",
+                Sex = 1
             });
-            var response = await client.PutAsync("/api/Hero/824a7a65-b769-4b70-bccb-91f880b6ddf1", new StringContent(newHero, Encoding.UTF8, "application/json"));
+            var response = await client.PutAsync("/api/Person/824a7a65-b769-4b70-bccb-91f880b6ddf1", new StringContent(newPerson, Encoding.UTF8, "application/json"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
@@ -271,68 +271,68 @@ namespace Boilerplate.Api.IntegrationTests
 
 
         [Fact]
-        public async Task Put_NamelessHero_ReturnsBadRequest()
+        public async Task Put_NamelessPerson_ReturnsBadRequest()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var newHero = JsonSerializer.Serialize(new
+            var newPerson = JsonSerializer.Serialize(new
             {
-                HeroType = 1
+                Sex = 1
             });
-            var response = await client.PutAsync("/api/Hero/824a7a65-b769-4b70-bccb-91f880b6ddf1", new StringContent(newHero, Encoding.UTF8, "application/json"));
+            var response = await client.PutAsync("/api/Person/824a7a65-b769-4b70-bccb-91f880b6ddf1", new StringContent(newPerson, Encoding.UTF8, "application/json"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
-        public async Task Put_Individualityless_ReturnsBadRequest()
+        public async Task Put_Jobless_ReturnsBadRequest()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var newHero = JsonSerializer.Serialize(new
+            var newPerson = JsonSerializer.Serialize(new
             {
-                Name = "Name hero badrequest"
+                Name = "Name Person badrequest"
             });
-            var response = await client.PutAsync("/api/Hero/824a7a65-b769-4b70-bccb-91f880b6ddf1", new StringContent(newHero, Encoding.UTF8, "application/json"));
+            var response = await client.PutAsync("/api/Person/824a7a65-b769-4b70-bccb-91f880b6ddf1", new StringContent(newPerson, Encoding.UTF8, "application/json"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
-        public async Task Put_EmptyHero_ReturnsBadRequest()
+        public async Task Put_EmptyPerson_ReturnsBadRequest()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var newHero = JsonSerializer.Serialize(new
+            var newPerson = JsonSerializer.Serialize(new
             {
             });
-            var response = await client.PutAsync("/api/Hero/824a7a65-b769-4b70-bccb-91f880b6ddf1", new StringContent(newHero, Encoding.UTF8, "application/json"));
+            var response = await client.PutAsync("/api/Person/824a7a65-b769-4b70-bccb-91f880b6ddf1", new StringContent(newPerson, Encoding.UTF8, "application/json"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
         }
 
         [Fact]
-        public async Task Put_InvalidHeroId_ReturnsNotFound()
+        public async Task Put_InvalidPersonId_ReturnsNotFound()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
             // Act
-            var newHero = JsonSerializer.Serialize(new
+            var newPerson = JsonSerializer.Serialize(new
             {
-                Name = "Name hero not found",
-                HeroType = 1
+                Name = "Name Person not found",
+                Sex = 1
             });
-            var response = await client.PutAsync("/api/Hero/1d2c03e0-cc51-4f22-b1be-cdee04b1f896", new StringContent(newHero, Encoding.UTF8, "application/json"));
+            var response = await client.PutAsync("/api/Person/1d2c03e0-cc51-4f22-b1be-cdee04b1f896", new StringContent(newPerson, Encoding.UTF8, "application/json"));
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);
@@ -343,24 +343,24 @@ namespace Boilerplate.Api.IntegrationTests
         #region DELETE
 
         [Fact]
-        public async Task Delete_ValidHero_ReturnsNoContent()
+        public async Task Delete_ValidPerson_ReturnsNoContent()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
-            var response = await client.DeleteAsync("/api/Hero/824a7a65-b769-4b70-bccb-91f880b6ddf1");
+            var response = await client.DeleteAsync("/api/Person/824a7a65-b769-4b70-bccb-91f880b6ddf1");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NoContent);
         }
 
         [Fact]
-        public async Task Delete_InvalidHero_ReturnsNotFound()
+        public async Task Delete_InvalidPerson_ReturnsNotFound()
         {
             // Arrange
             var client = Factory.RebuildDb().CreateClient();
 
-            var response = await client.DeleteAsync("/api/Hero/88d59ace-2c1a-49b0-8190-49b8304f8120");
+            var response = await client.DeleteAsync("/api/Person/88d59ace-2c1a-49b0-8190-49b8304f8120");
 
             // Assert
             response.StatusCode.Should().Be(HttpStatusCode.NotFound);

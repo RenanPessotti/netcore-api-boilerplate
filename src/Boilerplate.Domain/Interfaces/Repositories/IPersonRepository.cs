@@ -3,6 +3,6 @@ using Boilerplate.Domain.Entities;
 
 namespace Boilerplate.Domain.Interfaces.Repositories
 {
-    public interface IHeroRepository : IRepository<Hero>
+    public interface IPersonRepository : IRepository<Person>
     {}
 }

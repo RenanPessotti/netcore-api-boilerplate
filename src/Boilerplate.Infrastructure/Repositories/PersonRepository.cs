@@ -4,9 +4,9 @@ using Boilerplate.Infrastructure.Context;
 
 namespace Boilerplate.Infrastructure.Repositories
 {
-    public class HeroRepository : Repository<Hero>, IHeroRepository
+    public class PersonRepository : Repository<Person>, IPersonRepository
     {
-        public HeroRepository(HeroDbContext dbContext) : base(dbContext) { }
+        public PersonRepository(PersonDbContext dbContext) : base(dbContext) { }
     }
 }
 

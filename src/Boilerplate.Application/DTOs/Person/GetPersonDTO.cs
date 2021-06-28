@@ -1,9 +1,9 @@
 ﻿using System;
 using Boilerplate.Domain.Entities.Enums;
 
-namespace Boilerplate.Application.DTOs.Hero
+namespace Boilerplate.Application.DTOs.Person
 {
-    public class GetHeroDto
+    public class GetPersonDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
@@ -11,9 +11,7 @@ namespace Boilerplate.Application.DTOs.Hero
 
         public int? Age { get; set; }
 
-        public string Individuality { get; set; }
-        public HeroType? HeroType { get; set; }
-
-        public string Team { get; set; }
+        public string Job { get; set; }
+        public Sex? Sex { get; set; }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Boilerplate.Application.DTOs.Hero;
+using Boilerplate.Application.DTOs.Person;
 using Boilerplate.Domain.Entities;
 
 namespace Boilerplate.Application.MappingProfiles
@@ -8,10 +8,10 @@ namespace Boilerplate.Application.MappingProfiles
     {
         public MappingProfile()
         {
-            // Hero Map
-            CreateMap<Hero, GetHeroDto>().ReverseMap();
-            CreateMap<InsertHeroDto, Hero>();
-            CreateMap<UpdateHeroDto, Hero>();
+            // Person Map
+            CreateMap<Person, GetPersonDto>().ReverseMap();
+            CreateMap<InsertPersonDto, Person>();
+            CreateMap<UpdatePersonDto, Person>();
         }
     }
 }

@@ -12,18 +12,18 @@ namespace Boilerplate.Api.Extensions
         {
             if (configuration.GetValue<bool>("UseInMemoryDatabase"))
             {
-                services.AddDbContext<HeroDbContext>(options =>
-                    options.UseInMemoryDatabase("HeroesDb"));
+                services.AddDbContext<PersonDbContext>(options =>
+                    options.UseInMemoryDatabase("PersonsDb"));
             }
             else
             {
                 if (environment?.EnvironmentName == "Testing")
-                    services.AddDbContextPool<HeroDbContext>(o =>
+                    services.AddDbContextPool<PersonDbContext>(o =>
                     {
                         o.UseSqlite("Data Source=test.db");
                     });
                 else
-                    services.AddDbContextPool<HeroDbContext>(o =>
+                    services.AddDbContextPool<PersonDbContext>(o =>
                     {
                         o.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
                     });
