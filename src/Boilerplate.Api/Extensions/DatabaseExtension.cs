@@ -10,18 +10,24 @@ namespace Boilerplate.Api.Extensions
     {
         public static void AddApplicationDbContext(this IServiceCollection services, IConfiguration configuration, IWebHostEnvironment environment)
         {
-
-            if (environment?.EnvironmentName == "Testing")
-                services.AddDbContextPool<HeroDbContext>(o =>
-                {
-                    o.UseSqlite("Data Source=test.db");
-                });
+            if (configuration.GetValue<bool>("UseInMemoryDatabase"))
+            {
+                services.AddDbContext<HeroDbContext>(options =>
+                    options.UseInMemoryDatabase("HeroesDb"));
+            }
             else
-                services.AddDbContextPool<HeroDbContext>(o =>
-                {
-                    o.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
-                    //o.UseInMemoryDatabase(databaseName: "heroesdb");
-                });
+            {
+                if (environment?.EnvironmentName == "Testing")
+                    services.AddDbContextPool<HeroDbContext>(o =>
+                    {
+                        o.UseSqlite("Data Source=test.db");
+                    });
+                else
+                    services.AddDbContextPool<HeroDbContext>(o =>
+                    {
+                        o.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
+                    });
+            }
         }
     }
 }

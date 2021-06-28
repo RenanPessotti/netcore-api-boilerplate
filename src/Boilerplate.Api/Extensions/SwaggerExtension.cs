@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -10,7 +11,7 @@ namespace Boilerplate.Api.Extensions
 {
     public static class SwaggerExtension
     {
-        public static IServiceCollection AddApiDoc(this IServiceCollection services)
+        public static IServiceCollection AddApiDoc(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSwaggerGen(c =>
             {
@@ -22,8 +23,8 @@ namespace Boilerplate.Api.Extensions
                         Description = "Boilerplate de API",
                         Contact = new OpenApiContact
                         {
-                            Name = "Yan Pitangui",
-                            Url = new Uri("https://github.com/yanpitangui")
+                            Name = "Renan Pessotti",
+                            Url = new Uri(configuration.GetValue<string>("GitHubUrl"))
                         }
                     });
                 c.DescribeAllParametersInCamelCase();

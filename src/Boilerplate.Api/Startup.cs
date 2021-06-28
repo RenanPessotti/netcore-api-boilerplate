@@ -3,6 +3,7 @@ using Boilerplate.Api.Extensions;
 using Boilerplate.Application.Interfaces;
 using Boilerplate.Application.Services;
 using Boilerplate.Domain.Interfaces.Repositories;
+using Boilerplate.Infrastructure.Context;
 using Boilerplate.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,14 +15,14 @@ namespace Boilerplate.Api
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
+
         public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
             Environment = environment;
         }
-
-        public IConfiguration Configuration { get; }
-        public IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -40,6 +41,9 @@ namespace Boilerplate.Api
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); // for enum as strings
             });
 
+            services.AddHealthChecks()
+                .AddDbContextCheck<HeroDbContext>();
+
             // AutoMapper settings
             services.AddAutoMapperSetup();
 
@@ -47,29 +51,42 @@ namespace Boilerplate.Api
             services.AddHttpContextAccessor();
 
             // Swagger settings
-            services.AddApiDoc();
+            services.AddApiDoc(Configuration);
             // GZip compression
             services.AddCompression();
 
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Error");
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                app.UseHsts();
+            }
+
+            app.UseHealthChecks("/check");
             app.UseCustomSerilogRequestLogging();
-            app.UseRouting();
             app.UseApiDoc();
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            //added request logging
-
-
             app.UseHttpsRedirection();
-
 
             app.UseResponseCompression();
         }
