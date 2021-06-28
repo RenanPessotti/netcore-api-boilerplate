@@ -82,8 +82,5 @@ In the root folder, run ``dotnet test``. This command will try to find all test 
 # If you like it, give it a Star
 If this template was useful for you, or if you learned something, please give it a Star! :star:
 
-# Thanks
-This project has great influence of https://github.com/lkurzyniec/netcore-boilerplate and https://github.com/EduardoPires/EquinoxProject. If you have time, please visit these repos, and give them a star, too!
-
 # About
 This boilerplate/template was developed by Renan Pessotti under [MIT license](LICENSE).
