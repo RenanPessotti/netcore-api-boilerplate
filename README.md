@@ -2,8 +2,9 @@
 A `.Net 5.0` WebApi boilerplate / template project. Repositories, Swagger, Mapper, Serilog and more implemented. 
 
 [![Build](https://github.com/RenanPessotti/netcore-api-boilerplate/actions/workflows/build.yml/badge.svg)](https://github.com/renanpessotti/netcore-api-boilerplate/actions/workflows/build.yml)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=RenanPessotti/netcore-api-boilerplate&metric=coverage)](https://sonarcloud.io/dashboard?id=renanpessotti_netcore-api-boilerplate)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=renanpessotti_netcore-api-boilerplatee&metric=alert_status)](https://sonarcloud.io/dashboard?id=renanpessotti_netcore-api-boilerplate)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=RenanPessotti_netcore-api-boilerplate&metric=coverage)](https://sonarcloud.io/dashboard?id=RenanPessotti_netcore-api-boilerplate)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=RenanPessotti_netcore-api-boilerplate&metric=alert_status)](https://sonarcloud.io/dashboard?id=RenanPessotti_netcore-api-boilerplate)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=RenanPessotti_netcore-api-boilerplate&metric=code_smells)](https://sonarcloud.io/dashboard?id=RenanPessotti_netcore-api-boilerplate)
 
 The goal of this project is to be a kickstart to your .Net WebApi, implementing the most common used patterns
 and technologies for a restful API in .net, making your work easier.
